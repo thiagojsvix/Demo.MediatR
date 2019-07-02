@@ -1,13 +1,12 @@
-﻿
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Ordering.Domain.Command;
+using Ordering.Api.Command;
+using Ordering.Api.Events;
 using Ordering.Domain.Core;
 using Ordering.Domain.Entitys;
-using Ordering.Domain.Events;
 
-namespace Ordering.Domain.Handlers
+namespace Ordering.Api.Handlers
 {
     public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, Response>
     {

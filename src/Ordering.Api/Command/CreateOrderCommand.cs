@@ -3,7 +3,7 @@ using FluentValidation;
 using MediatR;
 using Ordering.Domain.Core;
 
-namespace Ordering.Domain.Command
+namespace Ordering.Api.Command
 {
     public class CreateOrderCommand : IRequest<Response>
     {

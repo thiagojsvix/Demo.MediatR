@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Ordering.Domain.Command;
+using Ordering.Api.Command;
 
 namespace Ordering.Api.Controllers
 {

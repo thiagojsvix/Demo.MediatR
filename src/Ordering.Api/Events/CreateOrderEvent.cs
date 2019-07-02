@@ -1,12 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Ordering.Domain.Command;
+using Ordering.Api.Command;
 
-namespace Ordering.Domain.Events
+namespace Ordering.Api.Events
 {
     public class CreateOrderEvent : INotification
     {

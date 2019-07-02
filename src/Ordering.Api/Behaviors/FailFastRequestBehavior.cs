@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ using FluentValidation.Results;
 using MediatR;
 using Ordering.Domain.Core;
 
-namespace Ordering.Domain.Behaviors
+namespace Ordering.Api.Behaviors
 {
     public class FailFastRequestBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse : Response
     {
