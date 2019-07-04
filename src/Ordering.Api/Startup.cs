@@ -35,7 +35,7 @@ namespace Ordering.Api
 
         private static void AddMediatr(IServiceCollection services)
         {
-            const string applicationAssemblyName = "Ordering.Domain";
+            const string applicationAssemblyName = "Ordering.Api";
             var assembly = AppDomain.CurrentDomain.Load(applicationAssemblyName);
 
             AssemblyScanner

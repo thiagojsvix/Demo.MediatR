@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +9,10 @@ namespace Ordering.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class OrderController : ControllerBase
     {
         private readonly IMediator mediator;
-        public ValuesController(IMediator mediator)
+        public OrderController(IMediator mediator)
         {
             this.mediator = mediator;
         }
