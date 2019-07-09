@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ordering.Domain.Core;
+using Ordering.Domain.Events;
 using Ordering.Domain.Validators;
 
 namespace Ordering.Domain.Entitys
@@ -53,6 +54,12 @@ namespace Ordering.Domain.Entitys
 
             this.Paid = true;
             this.PaymentDate = DateTime.UtcNow;
+        }
+
+        public void AddOrderEvent()
+        {
+            var orderEvent = new CreateOrderEvent(this.CustomerId, this.Discount, this.Paid);
+            this.AddDomainEvent(orderEvent);
         }
     }
 }

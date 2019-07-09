@@ -3,19 +3,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Ordering.Api.Command;
 
-namespace Ordering.Api.Events
+namespace Ordering.Domain.Events
 {
     public class CreateOrderEvent : INotification
     {
-        public CreateOrderEvent(CreateOrderCommand command)
+        public CreateOrderEvent(long customerId, decimal discount, bool paid)
         {
-            this.CustomerId = command.CustomerId;
-            this.Discount = command.Discount;
-            this.Paid = command.Paid;
-            this.CreationDate = command.CreationDate;
-            this.PaymentDate = command.PaymentDate;
+            this.CustomerId = customerId;
+            this.Discount = discount;
+            this.Paid = paid;
+            this.CreationDate = DateTime.Now;
+            this.PaymentDate = this.Paid ? DateTime.Now : (DateTime?)null;
         }
 
         public long CustomerId { get; }
@@ -36,8 +35,8 @@ namespace Ordering.Api.Events
 
         public async Task Handle(CreateOrderEvent notification, CancellationToken cancellationToken)
         {
-            await Task.Delay(0);
-            this._logger.LogWarning("Disparado Order Save DB");
+            await Task.Delay(0, cancellationToken);
+            this._logger.LogWarning("Dispatched Order Save DB");
         }
     }
 
@@ -50,8 +49,8 @@ namespace Ordering.Api.Events
         }
         public async Task Handle(CreateOrderEvent notification, CancellationToken cancellationToken)
         {
-            await Task.Delay(0);
-            this.logger.LogWarning("Disparado Order Mail");
+            await Task.Delay(0, cancellationToken);
+            this.logger.LogWarning("Dispatched Order Mail");
         }
     }
 }

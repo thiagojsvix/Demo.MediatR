@@ -5,7 +5,7 @@ using Ordering.Domain.Core;
 
 namespace Ordering.Api.Command
 {
-    public class CreateOrderCommand : IRequest<Response>
+    public class CreateOrderCommand : IRequest<NotificationList>
     {
         public CreateOrderCommand(long customerId, decimal discount, bool paid)
         {
@@ -29,9 +29,6 @@ namespace Ordering.Api.Command
             this.RuleFor(x => x.CustomerId).Must(this.CustormerShouldNotBeEmpty).WithMessage("Customer should not be empty!");
         }
 
-        private bool CustormerShouldNotBeEmpty(long value)
-        {
-            return value != 0;
-        }
+        private bool CustormerShouldNotBeEmpty(long value) => value != 0;
     }
 }

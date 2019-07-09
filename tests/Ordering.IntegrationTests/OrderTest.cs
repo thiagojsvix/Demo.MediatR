@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using Ordering.Api.Command;
@@ -30,7 +31,7 @@ namespace Ordering.IntegrationTests
         }
 
         [Fact]
-        public async Task CreateOrder()
+        public async Task CreateOrderOk()
         {
             //arrange
             HttpResponseMessage responseMessage;
@@ -45,6 +46,44 @@ namespace Ordering.IntegrationTests
             //assert
             responseMessage.IsSuccessStatusCode.Should().BeTrue();
             statusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task CreateOrderFaild()
+        {
+            //arrange
+            HttpResponseMessage responseMessage;
+            var createOrder = new CreateOrderCommand(0, 0M, true);
+            var jsonData = JsonConvert.SerializeObject(createOrder);
+
+            //act
+            using (var stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json"))
+                responseMessage = await this.httpClient.PostAsync(this.Url, stringContent);
+            var statusCode = responseMessage.StatusCode;
+            var response = responseMessage.Content.ReadAsStringAsync();
+
+            //assert
+            responseMessage.IsSuccessStatusCode.Should().BeFalse();
+            statusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        }
+
+        [Fact]
+        public async Task CreateOrderException()
+        {
+            //act
+            var responseMessage = await this.httpClient.GetAsync($"{this.Url}/Exception");
+
+            var content = await responseMessage.Content.ReadAsStringAsync();
+            var problemDetails = JsonConvert.DeserializeObject<ProblemDetails>(content);
+
+            //asert
+            responseMessage.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+            responseMessage.Content.Headers.ContentType.ToString().Should().Be("application/problem+json");
+
+            problemDetails.Status.Should().Be(500);
+            problemDetails.Title.Should().Be("Throw Exception");
+            problemDetails.Instance.Should().Be("/api/Order/Exception");
+            problemDetails.Detail.Should().NotBeNullOrEmpty();
         }
 
         private string GetAppBasePath(string applicationWebSiteName)

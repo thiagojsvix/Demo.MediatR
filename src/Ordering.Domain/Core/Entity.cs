@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using MediatR;
 
 namespace Ordering.Domain.Core
@@ -16,9 +17,8 @@ namespace Ordering.Domain.Core
             this._domainEvents.Add(eventItem);
         }
 
-        public void RemoveDomainEvent(INotification eventItem)
-        {
-            this._domainEvents?.Remove(eventItem);
-        }
+        public void RemoveDomainEvent(INotification eventItem) => this._domainEvents?.Remove(eventItem);
+
+        public void ClearDomainEvents() => this._domainEvents?.Clear();
     }
 }

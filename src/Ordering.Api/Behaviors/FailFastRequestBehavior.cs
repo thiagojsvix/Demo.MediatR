@@ -9,12 +9,14 @@ using Ordering.Domain.Core;
 
 namespace Ordering.Api.Behaviors
 {
-    public class FailFastRequestBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse : Response
+    public class FailFastRequestBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse : NotificationList
     {
         private readonly IEnumerable<IValidator> _validators;
+        private readonly NotificationList response;
 
-        public FailFastRequestBehavior(IEnumerable<IValidator<TRequest>> validators)
+        public FailFastRequestBehavior(NotificationList response, IEnumerable<IValidator<TRequest>> validators)
         {
+            this.response = response;
             this._validators = validators;
         }
 
@@ -26,18 +28,12 @@ namespace Ordering.Api.Behaviors
                                .Where(f => f != null)
                                .ToList();
 
-            return failures.Any() ? Errors(failures) : next();
+            return failures.Any() ? this.Errors(failures) : next();
         }
 
-        private static Task<TResponse> Errors(IEnumerable<ValidationFailure> failures)
+        private Task<TResponse> Errors(IEnumerable<ValidationFailure> failures)
         {
-            var response = new Response();
-
-            foreach (var failure in failures)
-            {
-                response.AddError(failure.ErrorMessage);
-            }
-
+            this.response.AddNotifications(failures);
             return Task.FromResult(response as TResponse);
         }
     }

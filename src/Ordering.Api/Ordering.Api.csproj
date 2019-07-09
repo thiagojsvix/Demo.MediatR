@@ -15,10 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extension\" />
+    <ProjectReference Include="..\Ordering.Repository\Ordering.Repository.csproj" />
   </ItemGroup>
 
 </Project>

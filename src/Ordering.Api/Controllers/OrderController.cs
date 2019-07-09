@@ -1,9 +1,11 @@
 ﻿
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Ordering.Api.Command;
+using Ordering.Domain.Core;
 
 namespace Ordering.Api.Controllers
 {
@@ -22,10 +24,10 @@ namespace Ordering.Api.Controllers
         public async Task<IActionResult> CreateOrderAsync(CreateOrderCommand value)
         {
             var response = await this.mediator.Send(value);
-
-            if (response.Errors.Any())
-                return base.BadRequest(response.Errors);
             return base.Ok(response.Result);
         }
+
+        [HttpGet("Exception")]
+        public ActionResult Get(int id) => throw new InvalidOperationException("Throw Exception");
     }
 }
