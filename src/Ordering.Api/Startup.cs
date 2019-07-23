@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Ordering.Api.Extension;
 using Ordering.Api.Filters;
 using Ordering.Domain.Core;
+using Ordering.Repository;
 
 namespace Ordering.Api
 {
@@ -22,7 +23,8 @@ namespace Ordering.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<NotificationList>();
-
+            services.AddScoped(typeof(IOrderRepository<Domain.Entitys.Order>), typeof(OrderRepository));
+            
             services.AddGlobalExceptionHandler()
                     .AddMediatRHandler();
 

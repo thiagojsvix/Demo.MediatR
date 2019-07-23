@@ -60,7 +60,6 @@ namespace Ordering.IntegrationTests
             using (var stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json"))
                 responseMessage = await this.httpClient.PostAsync(this.Url, stringContent);
             var statusCode = responseMessage.StatusCode;
-            var response = responseMessage.Content.ReadAsStringAsync();
 
             //assert
             responseMessage.IsSuccessStatusCode.Should().BeFalse();

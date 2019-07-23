@@ -21,6 +21,7 @@ namespace Ordering.Domain.Entitys
 
             this._items = new List<OrderItem>();
 
+            this.AddOrderEvent();
             this.Validate(this, new OrderValidator());
         }
 
