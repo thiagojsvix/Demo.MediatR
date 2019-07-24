@@ -8,6 +8,7 @@ namespace Ordering.Domain.Validators
         public OrderValidator()
         {
             this.RuleFor(x => x.CustomerId).NotEmpty();
+            this.RuleFor(x => x.OrderTotal).GreaterThanOrEqualTo(0);
         }
     }
 
@@ -16,6 +17,7 @@ namespace Ordering.Domain.Validators
         public AddItemValidator()
         {
             this.Include(new OrderValidator());
+            
             this.RuleFor(x => x.Paid).OrderShouldNotBePaid();
             this.RuleFor(x => x.Discount).Must(this.GrossTotalExceded).WithMessage("Discount cannot exceed the order total").WithErrorCode("GrossTotalExceded");
         }

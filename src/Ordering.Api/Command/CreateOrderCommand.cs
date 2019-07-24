@@ -18,6 +18,8 @@ namespace Ordering.Api.Command
         public long CustomerId { get; private set; }
         public decimal Discount { get; private set; }
         public bool Paid { get; private set; }
+
+
         public DateTime CreationDate { get; private set; }
         public DateTime? PaymentDate { get; private set; }
     }
